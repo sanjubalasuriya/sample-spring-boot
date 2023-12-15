@@ -1,1 +1,1 @@
-# sample-spring-boot
+# sample-spring-boot 2.7
