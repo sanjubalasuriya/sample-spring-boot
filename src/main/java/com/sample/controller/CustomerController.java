@@ -36,12 +36,12 @@ public class CustomerController {
         return new ResponseEntity<StandardResponse>(new StandardResponse(200,"success",message)
                 , HttpStatus.OK);
     }
-//
-//    @PutMapping("/update")
-//    public ResponseEntity<CustomerDTO> updateCustomer( @RequestBody CustomerDTO customerDTO){
-//        CustomerDTO customerDTO1 = customerService.updateCustomer(customerDTO);
-//        return new ResponseEntity<CustomerDTO>(customerDTO1, HttpStatus.CREATED);
-//    }
+
+    @PutMapping("/update")
+    public ResponseEntity<StandardResponse> updateCustomer( @RequestBody CustomerDTO customerDTO){
+        CustomerDTO customerDTO1 = customerService.updateCustomer(customerDTO);
+        return new ResponseEntity<CustomerDTO>(customerDTO1, HttpStatus.CREATED);
+    }
 //
 //    @GetMapping("/all")
 //    public List<CustomerDTO> getAllCustomers(){
