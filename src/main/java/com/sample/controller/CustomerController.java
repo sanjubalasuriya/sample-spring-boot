@@ -1,5 +1,6 @@
 package com.sample.controller;
 
+import com.sample.dto.CustomerDTO;
 import com.sample.dto.request.RequestCustomerDTO;
 import com.sample.dto.response.ResponseCustomerDTO;
 import com.sample.service.CustomerService;
@@ -38,9 +39,10 @@ public class CustomerController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<StandardResponse> updateCustomer( @RequestBody CustomerDTO customerDTO){
-        CustomerDTO customerDTO1 = customerService.updateCustomer(customerDTO);
-        return new ResponseEntity<CustomerDTO>(customerDTO1, HttpStatus.CREATED);
+    public ResponseEntity<StandardResponse> updateCustomer(@RequestBody CustomerDTO customerDTO){
+        String message = customerService.updateCustomer(customerDTO);
+        return new ResponseEntity<StandardResponse>(new StandardResponse(200,"success",message)
+                , HttpStatus.OK);
     }
 //
 //    @GetMapping("/all")
