@@ -32,7 +32,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public ResponseCustomerDTO findByCustomerId(Long customerId) {
-//        if(customerRepository.existsById(customerId)){
+        if (customerRepository.existsById(customerId)) {
             Customer customer = customerRepository.getReferenceById(customerId);
             return new ResponseCustomerDTO(
                     customer.getCustomer_id(),
@@ -41,14 +41,28 @@ public class CustomerServiceImpl implements CustomerService {
                     customer.getAddress(),
                     customer.getEmail()
             );
-//        }else {
-//            throw new IllegalAccessException("sd");
+        } else {
+            throw new RuntimeException("Not Found");
         }
+    }
 
     @Override
     public String updateCustomer(CustomerDTO customerDTO) {
-        return null;
+        if(customerRepository.existsById(customerDTO.getStudent_id())){
+            Customer customer = customerRepository.getReferenceById(customerDTO.getStudent_id());
+            customer.setFirstName(customerDTO.getFirstName());
+            customer.setLastName(customerDTO.getLastName());
+            customer.setAddress(customerDTO.getAddress());
+            customer.setEmail(customerDTO.getEmail());
+
+            customerRepository.save(customer);
+            return customer.getFirstName() +" "+ customer.getLastName() + " Updated";
+        }else {
+            throw new RuntimeException("No data");
+        }
+
     }
+
 //        return null;
 
 
