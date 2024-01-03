@@ -1,5 +1,6 @@
 package com.sample.service.serviceImpl;
 
+import com.sample.dto.CustomerDTO;
 import com.sample.dto.request.RequestCustomerDTO;
 import com.sample.dto.response.ResponseCustomerDTO;
 import com.sample.entity.Customer;
@@ -43,6 +44,11 @@ public class CustomerServiceImpl implements CustomerService {
 //        }else {
 //            throw new IllegalAccessException("sd");
         }
+
+    @Override
+    public String updateCustomer(CustomerDTO customerDTO) {
+        return null;
+    }
 //        return null;
 
 
