@@ -14,9 +14,14 @@ public class Item {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
     private String name;
     private int qty;
     private double unitPrice;
 
+    public Item(String name, int qty, double unitPrice) {
+        this.name = name;
+        this.qty = qty;
+        this.unitPrice = unitPrice;
+    }
 }
