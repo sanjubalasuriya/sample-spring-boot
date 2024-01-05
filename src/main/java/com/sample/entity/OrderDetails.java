@@ -1,19 +1,42 @@
 package com.sample.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
 @Table(name = "order_details")
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 public class OrderDetails {
 
     @Id
-    private long id;
+    @Column(name = "order_details_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long orderDetailsId;
+
+    private String itemName;
+
+    private double qty;
+
+    private Double amount;
+
+    @ManyToOne
+    @JoinColumn(name = "item_id", nullable = false)
+    private Item item;
+
+    @ManyToOne
+    @JoinColumn(name = "order_id", nullable = false)
+    private Orders orders;
+
+    public OrderDetails(String itemName, double qty, Double amount, Item item, Orders orders) {
+        this.itemName = itemName;
+        this.qty = qty;
+        this.amount = amount;
+        this.item = item;
+        this.orders = orders;
+    }
+
+
 }
