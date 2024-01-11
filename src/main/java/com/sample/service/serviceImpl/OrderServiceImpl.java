@@ -1,9 +1,12 @@
 package com.sample.service.serviceImpl;
 
-import com.sample.dto.CustomerDTO;
+
+import com.sample.dto.paginated.ResponseItemPaginatedDTO;
+import com.sample.dto.paginated.ResponseOrderDetailsPaginatedDTO;
+import com.sample.dto.queryInterface.OrderDetailsInterface;
 import com.sample.dto.request.RequestOrderDetailsSave;
 import com.sample.dto.request.RequestOrderSaveDTO;
-import com.sample.entity.Customer;
+import com.sample.dto.response.ResponseOrderDetailsDTO;
 import com.sample.entity.OrderDetails;
 import com.sample.entity.Orders;
 import com.sample.repository.CustomerRepository;
@@ -13,6 +16,7 @@ import com.sample.repository.OrderRepository;
 import com.sample.service.OrderService;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,7 +28,6 @@ import java.util.List;
 public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
-
     private final CustomerRepository customerRepository;
     private final OrderDetailsRepository orderDetailsRepository;
     private final ItemRepository itemRepository;
@@ -65,5 +68,31 @@ public class OrderServiceImpl implements OrderService {
 
         }
         return null;
+    }
+
+    @Override
+    public ResponseOrderDetailsPaginatedDTO getAllIOrderDetails(int page, int size) {
+        List<OrderDetailsInterface> orderDetailsInterfaces = orderRepository.getOrderDetails(PageRequest.of(page, size));
+
+        List<ResponseOrderDetailsDTO> responseOrderDetailsDTOS = new ArrayList<>();
+
+        for(OrderDetailsInterface orderDetailsInterface: orderDetailsInterfaces){
+            ResponseOrderDetailsDTO responseOrderDetailsDTO = new ResponseOrderDetailsDTO(
+                    orderDetailsInterface.getFirstName(),
+                    orderDetailsInterface.getLastName(),
+                    orderDetailsInterface.getAddress(),
+                    orderDetailsInterface.getEmail(),
+                    orderDetailsInterface.getTotal(),
+                    orderDetailsInterface.getCreated_At()
+            );
+            responseOrderDetailsDTOS.add(responseOrderDetailsDTO);
+        }
+
+
+
+        return new ResponseOrderDetailsPaginatedDTO(
+                responseOrderDetailsDTOS,
+                orderRepository.orderDetailsCount()
+        );
     }
 }
